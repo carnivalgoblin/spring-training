@@ -4,6 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 
 @Entity
 public class ToDo {
@@ -14,10 +21,10 @@ public class ToDo {
 
   // ATTRIBUTES
 
-  public Boolean done;
-  public Integer priority;
-  public String title;
-  public String description;
-  public String dueDate;
+  private Boolean done;
+  private Integer priority;
+  private String title;
+  private String description;
+  private String dueDate;
 
 }
