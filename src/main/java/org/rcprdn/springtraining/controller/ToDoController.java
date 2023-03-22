@@ -1,8 +1,11 @@
 package org.rcprdn.springtraining.controller;
 
+import jakarta.validation.Valid;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.service.ToDoService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +19,12 @@ public class ToDoController {
 
   // ADD/DELETE TO_DO
   @PostMapping
-  public ToDo createToDo(@RequestBody ToDo toDo) {
+  public ToDo createToDo(@Valid @RequestBody ToDo toDo) {
     return toDoService.createToDo(toDo);
   }
 
   @DeleteMapping("/{id}")
-  public void delete(@PathVariable("id") Long id) {
+  public void delete(@Valid @PathVariable("id") Long id) {
     toDoService.deleteToDo(id);
   }
 
@@ -60,6 +63,12 @@ public class ToDoController {
   @GetMapping("/open/count")
   public Long openCount() {
     return toDoService.getCountOpenToDos();
+  }
+
+  // UPDATE
+  @PutMapping("/{id}")
+  public ToDo updateToDo(@Valid @PathVariable("id") Long id, @Valid @RequestBody ToDo toDo) {
+    return toDoService.updateToDo(id, toDo);
   }
 
 }

@@ -40,7 +40,7 @@ public class ToDoService {
 
  public List<ToDo> getAllInProgress() {
    return toDoRepository.findByDone(false);
- };
+ }
 
  public List<ToDo> getAllDone() {
    return toDoRepository.findByDone(true);

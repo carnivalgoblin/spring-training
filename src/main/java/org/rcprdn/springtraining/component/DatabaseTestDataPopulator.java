@@ -32,8 +32,16 @@ public class DatabaseTestDataPopulator implements CommandLineRunner {
     toDoTwo.setPriority(2);
     toDoTwo.setDueDate("Heute");
 
+    ToDo toDoThree = new ToDo();
+    toDoThree.setTitle("Drittes ToDo");
+    toDoThree.setDone(true);
+    toDoThree.setDescription("Dies ist das dritte ToDo.");
+    toDoThree.setPriority(2);
+    toDoThree.setDueDate("Heute");
+
     toDoRepository.save(toDoOne);
     toDoRepository.save(toDoTwo);
+    toDoRepository.save(toDoThree);
 
   }
 
