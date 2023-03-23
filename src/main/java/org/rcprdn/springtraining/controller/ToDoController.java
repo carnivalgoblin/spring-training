@@ -1,11 +1,12 @@
 package org.rcprdn.springtraining.controller;
 
 import jakarta.validation.Valid;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.rcprdn.springtraining.dto.ToDoCreate;
+import org.rcprdn.springtraining.dto.ToDoUpdate;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.service.ToDoService;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,13 @@ public class ToDoController {
   private final ToDoService toDoService;
 
   // ADD/DELETE TO_DO
-  @PostMapping
-  public ToDo createToDo(@Valid @RequestBody ToDo toDo) {
-    return toDoService.createToDo(toDo);
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ToDo createToDo(@Valid ToDoCreate toDoCreate) {
+    ToDo toDo = new ToDo();
+    toDo.setDescription(toDoCreate.getDescription());
+    toDo.setTitle(toDo.getTitle());
+
+    return this.toDoService.createToDo(toDo);
   }
 
   @DeleteMapping("/{id}")
@@ -66,9 +71,11 @@ public class ToDoController {
   }
 
   // UPDATE
-  @PutMapping("/{id}")
-  public ToDo updateToDo(@Valid @PathVariable("id") Long id, @Valid @RequestBody ToDo toDo) {
-    return toDoService.updateToDo(id, toDo);
+  @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void updateToDo(@Valid @PathVariable("id") Long id, @Valid ToDoUpdate toDoUpdate) {
+    ToDo toDo = new ToDo();
+    toDo.setDescription(toDoUpdate.getDescription());
+    toDo.setDone(toDoUpdate.getDone());
   }
 
 }
