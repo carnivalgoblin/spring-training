@@ -11,11 +11,11 @@ import java.util.List;
 @Service
 public class ToDoService {
 
-  private ToDoRepository toDoRepository;
+  private final ToDoRepository toDoRepository;
 
   public ToDo createToDo (ToDo toDo) {
     return toDoRepository.save(toDo);
-  };
+  }
 
   public ToDo updateToDo (long id, ToDo toDo) {
     ToDo exisitingToDo = toDoRepository.findById(id).orElse(null);
@@ -28,15 +28,15 @@ public class ToDoService {
     exisitingToDo.setDone(toDo.getDone());
 
     return toDoRepository.save(exisitingToDo);
-  };
+  }
 
   public void deleteToDo(long id) {
-    toDoRepository.deleteById(id);;
-  };
+    toDoRepository.deleteById(id);
+  }
 
   public List<ToDo> getAllToDos() {
     return toDoRepository.findAll();
-  };
+  }
 
  public List<ToDo> getAllInProgress() {
    return toDoRepository.findByDone(false);
@@ -44,7 +44,7 @@ public class ToDoService {
 
  public List<ToDo> getAllDone() {
    return toDoRepository.findByDone(true);
- };
+ }
 
  public ToDo getToDo(Long id) {
    return toDoRepository.findById(id).orElse(null);
@@ -52,10 +52,10 @@ public class ToDoService {
 
  public long getCountCompletedToDos() {
    return toDoRepository.countByDone(true);
- };
+ }
 
  public long getCountOpenToDos() {
    return toDoRepository.countByDone(false);
- };
+ }
 
 }

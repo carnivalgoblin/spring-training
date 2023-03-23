@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ToDoRepository extends JpaRepository<ToDo, Long> {
   List<ToDo> findByDone (Boolean done);
+
   Long countByDone (Boolean done);
 }

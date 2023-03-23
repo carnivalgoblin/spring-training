@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseTestDataPopulator implements CommandLineRunner {
 
-  private ToDoRepository toDoRepository;
+  private final ToDoRepository toDoRepository;
 
   public DatabaseTestDataPopulator(@Autowired ToDoRepository toDoRepository) {
     this.toDoRepository = toDoRepository;
