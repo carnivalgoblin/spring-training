@@ -3,7 +3,7 @@ package org.rcprdn.springtraining.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public class ToDoUpdate {
+public class ToDoUpdateDTO {
 
   @NotNull
   @Positive
@@ -15,7 +15,7 @@ public class ToDoUpdate {
   @NotNull
   private Boolean done;
 
-  public ToDoUpdate() {
+  public ToDoUpdateDTO() {
   }
 
   public Long getId() {

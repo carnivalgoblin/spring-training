@@ -1,10 +1,11 @@
 package org.rcprdn.springtraining.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.rcprdn.springtraining.dto.ToDoCreate;
-import org.rcprdn.springtraining.dto.ToDoUpdate;
+import org.rcprdn.springtraining.dto.ToDoCreateDTO;
+import org.rcprdn.springtraining.dto.ToDoUpdateDTO;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.service.ToDoService;
 import org.springframework.http.MediaType;
@@ -22,8 +23,8 @@ public class ToDoController {
 
   // ADD/DELETE TO_DO
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ToDo createToDo(@Valid @RequestBody ToDoCreate toDoCreate) {
-    return this.toDoService.createToDo(modelMapper.map(toDoCreate, ToDo.class));
+  public ToDo createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
+    return this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class));
   }
 
   @DeleteMapping("/{id}")
@@ -53,7 +54,7 @@ public class ToDoController {
 
   // GET SINGLE TO_DO
   @GetMapping("/{id}")
-  public ToDo getToDo(@PathVariable("id") Long id) {
+  public ToDo getToDo(@PathVariable("id") Long id) throws EntityNotFoundException {
     return toDoService.getToDo(id);
   }
 
@@ -70,13 +71,14 @@ public class ToDoController {
 
   // UPDATE
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ToDo updateToDo(@Valid @RequestBody ToDoUpdate toDoUpdate) {
-    ToDo toDo = this.toDoService.getToDo(toDoUpdate.getId());
+  public ToDo updateToDo(@Valid @RequestBody ToDoUpdateDTO toDoUpdateDTO) {
+    ToDo toDo = this.toDoService.getToDo(toDoUpdateDTO.getId());
 
-    modelMapper.map(toDoUpdate, toDo);
+    modelMapper.map(toDoUpdateDTO, toDo);
 
     return this.toDoService.updateToDo(toDo);
 
   }
+
 
 }

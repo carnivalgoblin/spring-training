@@ -2,7 +2,7 @@ package org.rcprdn.springtraining.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class ToDoCreate {
+public class ToDoCreateDTO {
 
   private String description;
   @NotBlank
@@ -11,7 +11,7 @@ public class ToDoCreate {
   private Integer priority;
   private String dueDate;
 
-  public ToDoCreate() {
+  public ToDoCreateDTO() {
   }
 
   public String getDescription() {

@@ -1,5 +1,6 @@
 package org.rcprdn.springtraining.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.repository.ToDoRepository;
@@ -47,7 +48,7 @@ public class ToDoService {
  }
 
  public ToDo getToDo(Long id) {
-   return toDoRepository.findById(id).orElse(null);
+   return toDoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID kann nicht gefunden werden!"));
  }
 
  public long getCountCompletedToDos() {
