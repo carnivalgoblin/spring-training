@@ -7,7 +7,7 @@ public class ToDoUpdate {
 
   @NotNull
   @Positive
-  private Long Id;
+  private Long id;
 
   @NotNull
   private String description;
@@ -16,6 +16,14 @@ public class ToDoUpdate {
   private Boolean done;
 
   public ToDoUpdate() {
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getDescription() {

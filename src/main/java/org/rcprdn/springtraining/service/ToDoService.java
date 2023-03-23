@@ -17,8 +17,8 @@ public class ToDoService {
     return toDoRepository.save(toDo);
   }
 
-  public ToDo updateToDo (long id, ToDo toDo) {
-    ToDo exisitingToDo = toDoRepository.findById(id).orElse(null);
+  public ToDo updateToDo (ToDo toDo) {
+    ToDo exisitingToDo = toDoRepository.findById(toDo.getId()).orElse(null);
 
     assert exisitingToDo != null;
     exisitingToDo.setTitle(toDo.getTitle());

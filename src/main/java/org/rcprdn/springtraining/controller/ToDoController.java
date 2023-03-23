@@ -2,6 +2,7 @@ package org.rcprdn.springtraining.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.rcprdn.springtraining.dto.ToDoCreate;
 import org.rcprdn.springtraining.dto.ToDoUpdate;
 import org.rcprdn.springtraining.entity.ToDo;
@@ -17,15 +18,12 @@ import java.util.List;
 public class ToDoController {
 
   private final ToDoService toDoService;
+  private final ModelMapper modelMapper;
 
   // ADD/DELETE TO_DO
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ToDo createToDo(@Valid ToDoCreate toDoCreate) {
-    ToDo toDo = new ToDo();
-    toDo.setDescription(toDoCreate.getDescription());
-    toDo.setTitle(toDo.getTitle());
-
-    return this.toDoService.createToDo(toDo);
+  public ToDo createToDo(@Valid @RequestBody ToDoCreate toDoCreate) {
+    return this.toDoService.createToDo(modelMapper.map(toDoCreate, ToDo.class));
   }
 
   @DeleteMapping("/{id}")
@@ -71,11 +69,14 @@ public class ToDoController {
   }
 
   // UPDATE
-  @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void updateToDo(@Valid @PathVariable("id") Long id, @Valid ToDoUpdate toDoUpdate) {
-    ToDo toDo = new ToDo();
-    toDo.setDescription(toDoUpdate.getDescription());
-    toDo.setDone(toDoUpdate.getDone());
+  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ToDo updateToDo(@Valid @RequestBody ToDoUpdate toDoUpdate) {
+    ToDo toDo = this.toDoService.getToDo(toDoUpdate.getId());
+
+    modelMapper.map(toDoUpdate, toDo);
+
+    return this.toDoService.updateToDo(toDo);
+
   }
 
 }

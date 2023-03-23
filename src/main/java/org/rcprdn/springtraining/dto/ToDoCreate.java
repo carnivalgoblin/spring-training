@@ -1,13 +1,15 @@
 package org.rcprdn.springtraining.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public class ToDoCreate {
 
-  @NotNull
   private String description;
-  @NotNull
+  @NotBlank
   private String title;
+  private Boolean done;
+  private Integer priority;
+  private String dueDate;
 
   public ToDoCreate() {
   }
@@ -26,5 +28,29 @@ public class ToDoCreate {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public Boolean getDone() {
+    return done;
+  }
+
+  public void setDone(Boolean done) {
+    this.done = done;
+  }
+
+  public Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(Integer priority) {
+    this.priority = priority;
+  }
+
+  public String getDueDate() {
+    return dueDate;
+  }
+
+  public void setDueDate(String dueDate) {
+    this.dueDate = dueDate;
   }
 }
