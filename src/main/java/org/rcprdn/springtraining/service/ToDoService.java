@@ -15,15 +15,13 @@ import java.util.ResourceBundle;
 public class ToDoService {
 
   private final ToDoRepository toDoRepository;
-  Locale locale = new Locale("fr");
-  ResourceBundle errorBundle = ResourceBundle.getBundle("ErrorResource", locale);
 
   public ToDo createToDo (ToDo toDo) {
     return toDoRepository.save(toDo);
   }
 
   public ToDo updateToDo (ToDo toDo) throws Exception {
-    ToDo exisitingToDo = toDoRepository.findById(toDo.getId()).orElseThrow(() -> new Exception(errorBundle.getString("internalServerError")));
+    ToDo exisitingToDo = toDoRepository.findById(toDo.getId()).orElseThrow(Exception::new);
 
     assert exisitingToDo != null;
     exisitingToDo.setTitle(toDo.getTitle());
@@ -43,24 +41,24 @@ public class ToDoService {
     return toDoRepository.findAll();
   }
 
- public List<ToDo> getAllInProgress() {
-   return toDoRepository.findByDone(false);
- }
+  public List<ToDo> getAllInProgress() {
+    return toDoRepository.findByDone(false);
+  }
 
- public List<ToDo> getAllDone() {
-   return toDoRepository.findByDone(true);
- }
+  public List<ToDo> getAllDone() {
+    return toDoRepository.findByDone(true);
+  }
 
- public ToDo getToDo(Long id) {
-   return toDoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(errorBundle.getString("entityNotFoundError")));
- }
+  public ToDo getToDo(Long id) {
+    return toDoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
 
- public long getCountCompletedToDos() {
-   return toDoRepository.countByDone(true);
- }
+  public long getCountCompletedToDos() {
+    return toDoRepository.countByDone(true);
+  }
 
- public long getCountOpenToDos() {
-   return toDoRepository.countByDone(false);
- }
+  public long getCountOpenToDos() {
+    return toDoRepository.countByDone(false);
+  }
 
 }

@@ -8,7 +8,9 @@ import org.rcprdn.springtraining.dto.ToDoCreateDTO;
 import org.rcprdn.springtraining.dto.ToDoUpdateDTO;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.service.ToDoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class ToDoController {
 
   // ADD/DELETE TO_DO
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ToDo createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
-    return this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class));
+  public ResponseEntity<ToDo> createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
+    return new ResponseEntity<>(this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class)), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
@@ -71,7 +73,7 @@ public class ToDoController {
 
   // UPDATE
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ToDo updateToDo(@Valid @RequestBody ToDoUpdateDTO toDoUpdateDTO) {
+  public ToDo updateToDo(@Valid @RequestBody ToDoUpdateDTO toDoUpdateDTO) throws Exception {
     ToDo toDo = this.toDoService.getToDo(toDoUpdateDTO.getId());
 
     modelMapper.map(toDoUpdateDTO, toDo);

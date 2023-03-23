@@ -1,7 +1,10 @@
 package org.rcprdn.springtraining.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,26 +14,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 @RestControllerAdvice
+@RequiredArgsConstructor
 @Log
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  Locale locale = new Locale("fr");
-  ResourceBundle errorBundle = ResourceBundle.getBundle("ErrorResource", locale);
+  public final MessageSource messageSource;
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> handleException(RuntimeException rex, Exception ex) {
-    logger.warn(errorBundle.getString("internalServerError"));
+
+    String message = messageSource.getMessage("internalServerError", null, LocaleContextHolder.getLocale());
     return new ResponseEntity<>(ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
   protected ResponseEntity<Object> entityNotFoundException(RuntimeException rex, WebRequest request) {
-    logger.warn(errorBundle.getString("entityNotFoundError"));
-    return handleExceptionInternal(rex, rex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+
+    String msg = getMessageSource().getMessage("entityNotFoundError", null, LocaleContextHolder.getLocale());
+    return handleExceptionInternal(rex, msg, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
   }
 
 }
