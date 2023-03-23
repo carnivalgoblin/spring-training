@@ -7,19 +7,23 @@ import org.rcprdn.springtraining.repository.ToDoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @RequiredArgsConstructor
 @Service
 public class ToDoService {
 
   private final ToDoRepository toDoRepository;
+  Locale locale = new Locale("fr");
+  ResourceBundle errorBundle = ResourceBundle.getBundle("ErrorResource", locale);
 
   public ToDo createToDo (ToDo toDo) {
     return toDoRepository.save(toDo);
   }
 
-  public ToDo updateToDo (ToDo toDo) {
-    ToDo exisitingToDo = toDoRepository.findById(toDo.getId()).orElse(null);
+  public ToDo updateToDo (ToDo toDo) throws Exception {
+    ToDo exisitingToDo = toDoRepository.findById(toDo.getId()).orElseThrow(() -> new Exception(errorBundle.getString("internalServerError")));
 
     assert exisitingToDo != null;
     exisitingToDo.setTitle(toDo.getTitle());
@@ -48,7 +52,7 @@ public class ToDoService {
  }
 
  public ToDo getToDo(Long id) {
-   return toDoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID kann nicht gefunden werden!"));
+   return toDoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(errorBundle.getString("entityNotFoundError")));
  }
 
  public long getCountCompletedToDos() {
