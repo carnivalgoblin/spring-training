@@ -1,4 +1,4 @@
-package org.rcprdn.springtraining.logging;
+package org.rcprdn.springtraining.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
