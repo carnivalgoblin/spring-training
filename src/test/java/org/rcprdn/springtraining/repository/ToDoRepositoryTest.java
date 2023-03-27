@@ -18,9 +18,10 @@ class ToDoRepositoryTest {
   private ToDo toDoTwo;
   private ToDo toDoThree;
 
-  // Init
   @BeforeEach
   public void setup() {
+
+
     toDoOne = new ToDo();
     toDoOne.setTitle("Erstes ToDo");
     toDoOne.setDone(false);
@@ -46,9 +47,8 @@ class ToDoRepositoryTest {
     toDoRepository.save(toDoTwo);
     toDoRepository.save(toDoThree);
   }
-
-
   // Tests
+
   @Test
   void findByStatus() {
     assertTrue(toDoRepository.findByDone(true).contains(toDoThree));
