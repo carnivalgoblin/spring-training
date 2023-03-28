@@ -12,8 +12,8 @@ public class DatabaseTestDataPopulator implements CommandLineRunner {
 
   private ToDoRepository toDoRepository;
 
- // @Value(value = "${testKey}")
- // public String testKey;
+  // @Value("${testKey}")
+  // private String testKey;
 
   public DatabaseTestDataPopulator(@Autowired ToDoRepository toDoRepository) {
     this.toDoRepository = toDoRepository;
