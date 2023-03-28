@@ -3,13 +3,17 @@ package org.rcprdn.springtraining.component;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseTestDataPopulator implements CommandLineRunner {
 
-  private final ToDoRepository toDoRepository;
+  private ToDoRepository toDoRepository;
+
+ // @Value(value = "${testKey}")
+ // public String testKey;
 
   public DatabaseTestDataPopulator(@Autowired ToDoRepository toDoRepository) {
     this.toDoRepository = toDoRepository;
