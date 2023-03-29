@@ -1,6 +1,7 @@
 package org.rcprdn.springtraining.service;
 
 import lombok.RequiredArgsConstructor;
+import org.rcprdn.springtraining.entity.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.User;
@@ -19,15 +20,21 @@ public class UserDetailsService {
     UserDetails user = User.builder()
             .username("user")
             .password(passwordEncoder.encode("userPassword"))
-            .roles("USER")
+            .authorities(Role.USER.getGrantedAuthorities())
             .build();
 
     UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder.encode("adminPassword"))
-            .roles("ADMIN")
+            .authorities(Role.ADMIN.getGrantedAuthorities())
             .build();
 
-    return new InMemoryUserDetailsManager(user, admin);
+    UserDetails analyst = User.builder()
+            .username("analyst")
+            .password(passwordEncoder.encode("analystPassword"))
+            .authorities(Role.ANALYST.getGrantedAuthorities())
+            .build();
+
+    return new InMemoryUserDetailsManager(user, admin, analyst);
   }
 }

@@ -14,12 +14,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class BasicAuthWebSecurityConfiguration {
 
-
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests((auth) -> auth
             .requestMatchers("/index.html").permitAll()
             .anyRequest().authenticated())
+            .csrf()
+            .disable()
             .httpBasic(Customizer.withDefaults());
     return http.build();
   }

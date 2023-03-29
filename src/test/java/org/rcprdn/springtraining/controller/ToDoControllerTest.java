@@ -1,5 +1,7 @@
 package org.rcprdn.springtraining.controller;
 
+import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ToDoController.class)
@@ -40,6 +42,8 @@ class ToDoControllerTest {
   private ToDo toDoThree;
 
   List<ToDo> todoList = new ArrayList<>();
+
+  Gson gson = new Gson();
 
   @BeforeEach
   public void setup() throws Exception {
@@ -82,11 +86,51 @@ class ToDoControllerTest {
   }
 
   @Test
-  void delete() {
+  @WithMockUser
+  void delete() throws Exception {
+    mockMvc.perform(get("/api/todos/1"))
+            .andExpect(status().isOk());
   }
 
   @Test
-  void getAllTodos() {
+  @WithMockUser
+  void getAllTodos() throws Exception {
+
+    // String jsonTodos = gson.toJson(todoList);
+    // when(this.toDoService.getAllToDos()).thenReturn(jsonTodos);
+
+    mockMvc.perform(get("/api/todos"))
+            .andExpect(status().isOk())
+            .andExpect(content().json(
+                    """
+                            [
+                              {
+                                "id": 1,
+                                "done": false,
+                                "priority": 1,
+                                "title": "Erstes ToDo",
+                                "description": "Dies ist das erste ToDo.",
+                                "dueDate": "Morgen"
+                              },
+                              {
+                                "id": 2,
+                                "done": false,
+                                "priority": 2,
+                                "title": "Zweites ToDo",
+                                "description": "Dies ist das zweite ToDo.",
+                                "dueDate": "Heute"
+                              },
+                              {
+                                "id": 3,
+                                "done": true,
+                                "priority": 2,
+                                "title": "Drittes ToDo",
+                                "description": "Dies ist das dritte ToDo.",
+                                "dueDate": "Heute"
+                              }
+                            ]
+                            """
+            ));
   }
 
   @Test
