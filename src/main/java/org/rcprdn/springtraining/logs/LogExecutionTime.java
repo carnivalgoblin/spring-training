@@ -1,4 +1,4 @@
-package org.rcprdn.springtraining.logging;
+package org.rcprdn.springtraining.logs;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

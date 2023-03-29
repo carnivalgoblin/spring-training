@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.rcprdn.springtraining.dto.ToDoCreateDTO;
 import org.rcprdn.springtraining.dto.ToDoUpdateDTO;
 import org.rcprdn.springtraining.entity.ToDo;
-import org.rcprdn.springtraining.logging.LogExecutionTime;
 import org.rcprdn.springtraining.service.ToDoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

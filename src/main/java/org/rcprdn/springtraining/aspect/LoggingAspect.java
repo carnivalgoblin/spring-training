@@ -29,7 +29,7 @@ public class LoggingAspect {
    * @return
    * @throws Throwable
    */
-  @Around("@annotation(org.rcprdn.springtraining.logging.LogExecutionTime)")
+  @Around("@annotation(org.rcprdn.springtraining.logs.LogExecutionTime)")
   public Object methodTimeLogger(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 

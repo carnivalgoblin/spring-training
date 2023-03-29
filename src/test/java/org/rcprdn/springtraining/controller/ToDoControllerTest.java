@@ -9,6 +9,7 @@ import org.rcprdn.springtraining.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -89,6 +90,7 @@ class ToDoControllerTest {
   }
 
   @Test
+  @WithMockUser
   void getToDo() throws Exception {
     when(toDoService.getToDo(1L)).thenReturn(toDoOne);
     mockMvc.perform(get("/api/todos/1"))
