@@ -19,19 +19,15 @@ public class ToDoUpdateDTO {
   @Positive
   private Long id;
 
-  @NotNull
   private Integer prio;
 
-  @NotNull
   private String description;
 
   @NotNull
   private Boolean done;
 
-  @NotBlank
   private String title;
 
-  @NotBlank
   private String dueDate;
 
 }
