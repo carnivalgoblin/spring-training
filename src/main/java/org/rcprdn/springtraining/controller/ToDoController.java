@@ -29,14 +29,14 @@ public class ToDoController {
 
   // ADD/DELETE TO_DO
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  @PreAuthorize("hasAnyRole(USER, ADMIN)")
+  @PreAuthorize("hasRole('TODO_CREATE')")
 //  @LogExecutionTime
   public ResponseEntity<ToDo> createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
     return new ResponseEntity<>(this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class)), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasAnyRole(ADMIN)")
+  @PreAuthorize("hasRole('TODO_DELETE')")
 //  @LogExecutionTime
   public void delete(@Valid @PathVariable("id") Long id) {
     toDoService.deleteToDo(id);
@@ -44,7 +44,7 @@ public class ToDoController {
 
   // GET ALL DEFAULT
   @GetMapping
-  @PermissionAll
+  @PreAuthorize("hasAnyRole('TODO_READ')")
 //  @LogExecutionTime
   public List<ToDo> getAllTodos() {
     List<ToDo> allTodos = toDoService.getAllToDos();
@@ -53,7 +53,7 @@ public class ToDoController {
 
   // GET COMPLETED AND OPEN TODOS
   @GetMapping("/completed")
-  @PermissionNonUser
+  @PreAuthorize("hasAnyRole('TODO_READ_ALL')")
 //  @LogExecutionTime
   public List<ToDo> getCompletedTodos() {
     List<ToDo> toDos = toDoService.getAllDone();
@@ -61,7 +61,7 @@ public class ToDoController {
   }
 
   @GetMapping("/open")
-  @PermissionNonUser
+  @PreAuthorize("hasAnyRole('TODO_READ_ALL')")
 //  @LogExecutionTime
   public List<ToDo> allInProgress () {
     List<ToDo> allInProgress = toDoService.getAllInProgress();
@@ -70,7 +70,7 @@ public class ToDoController {
 
   // GET SINGLE TO_DO
   @GetMapping("/{id}")
-  @PermissionAll
+  @PreAuthorize("hasAnyRole('TODO_READ')")
 //  @LogExecutionTime
   public ToDo getToDo(@PathVariable("id") Long id) throws EntityNotFoundException {
     return toDoService.getToDo(id);
@@ -78,14 +78,14 @@ public class ToDoController {
 
   // COUNTS
   @GetMapping("/completed/count")
-  @PermissionNonUser
+  @PreAuthorize("hasAnyRole('TODO_READ_ALL')")
 //  @LogExecutionTime
   public Long completedCount() {
     return toDoService.getCountCompletedToDos();
   }
 
   @GetMapping("/open/count")
-  @PermissionNonUser
+  @PreAuthorize("hasAnyRole('TODO_READ_ALL')")
 //  @LogExecutionTime
   public Long openCount() {
     return toDoService.getCountOpenToDos();
@@ -93,7 +93,7 @@ public class ToDoController {
 
   // UPDATE
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  @PreAuthorize("hasAnyRole(ADMIN)")
+  @PreAuthorize("hasAnyRole('TODO_UPDATE')")
 //  @LogExecutionTime
   public ToDo updateToDo(@Valid @RequestBody ToDoUpdateDTO toDoUpdateDTO) throws Exception {
     ToDo toDo = this.toDoService.getToDo(toDoUpdateDTO.getId());

@@ -1,8 +1,18 @@
 package org.rcprdn.springtraining.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ToDoUpdateDTO {
 
   @NotNull
@@ -10,35 +20,18 @@ public class ToDoUpdateDTO {
   private Long id;
 
   @NotNull
+  private Integer prio;
+
+  @NotNull
   private String description;
 
   @NotNull
   private Boolean done;
 
-  public ToDoUpdateDTO() {
-  }
+  @NotBlank
+  private String title;
 
-  public Long getId() {
-    return id;
-  }
+  @NotBlank
+  private String dueDate;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Boolean getDone() {
-    return done;
-  }
-
-  public void setDone(Boolean done) {
-    this.done = done;
-  }
 }

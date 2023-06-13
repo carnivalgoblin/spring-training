@@ -1,6 +1,7 @@
 package org.rcprdn.springtraining.entity;
 
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -34,9 +35,9 @@ public enum Role {
     this.permissions = permissions;
   }
 
-  public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
+  public Set<GrantedAuthority> getGrantedAuthorities() {
     return getPermissions().stream()
-            .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+            .map(permission -> new SimpleGrantedAuthority("ROLE_" + permission.name() ))
             .collect(Collectors.toSet());
   }
 

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.rcprdn.springtraining.entity.ToDo;
 import org.rcprdn.springtraining.repository.ToDoRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class ToDoService {
   }
 
   public List<ToDo> getAllToDos() {
-    return toDoRepository.findAll();
+    return toDoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
   }
 
   public List<ToDo> getAllInProgress() {
